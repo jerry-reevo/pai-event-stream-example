@@ -21,7 +21,9 @@ agent = Agent(
 async def get_weather(ctx: RunContext[AgentDeps]):
     await ctx.deps.event_stream.emit("Getting weather...")
     await asyncio.sleep(2)
-    await ctx.deps.event_stream.emit("Weather: 70 degrees and sunny")
+    weather = "70 degrees and sunny"
+    await ctx.deps.event_stream.emit(weather)
+    return weather
 
 async def main():
     deps = AgentDeps(event_stream=AsyncIteratorProxy(asyncio.Queue()))
@@ -33,7 +35,7 @@ async def run_agent(deps: AgentDeps):
     async with agent.run_stream("What is the current weather?", deps=deps) as stream:
         async for message in stream.stream_text(delta=True):
             await deps.event_stream.emit(f"Text delta event: {message}")
-        await deps.event_stream.close()
+    await deps.event_stream.close()
 
 if __name__ == "__main__":
     import asyncio
