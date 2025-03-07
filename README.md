@@ -4,8 +4,8 @@ For context, see: https://github.com/pydantic/pydantic-ai/issues/640
 
 ```console
 $ uv run src/pai/agent.py
-Getting weather...
-70 degrees and sunny
+Tool call: Getting weather...
+Tool call result: 70 degrees and sunny
 Text delta event: The current weather is
 Text delta event:  70 degrees and sunny.
 ```
